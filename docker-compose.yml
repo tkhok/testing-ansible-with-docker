@@ -1,0 +1,20 @@
+version: "2"
+services:
+    ssh:
+        build:
+            context: .
+            dockerfile: ./Dockerfile-simple-ssh
+        ports: 
+            - "10022:22"
+        tty: true
+    
+    ansible:
+        build:
+            context: .
+            dockerfile: ./Dockerfile-testing-ansible
+        volumes:
+            - ./ansible:/ansible
+        working_dir: /ansible
+        depends_on:
+            - ssh
+        tty: true
